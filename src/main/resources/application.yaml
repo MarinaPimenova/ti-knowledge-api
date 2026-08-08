@@ -1,3 +1,61 @@
+server:
+  port: ${SERVER_PORT:8081}
+  servlet:
+    context-path: /
+    session:
+      timeout: 3600 # redefine default 30m by 1 hour
+
+
+logging:
+  level:
+    com.training: debug
+    org.springframework: info
+
+info:
+  app:
+    name: ti-knowledge-api
+    version: '@project.version@'
+
 spring:
   application:
-    name: ti-knowledge-api
+    name: ${info.app.name}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://${OKTA_OAUTH2_ISSUER}/
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: knowledge
+        hbm2ddl:
+          auto: none
+          jdbc:
+            batch_size: 30
+    hibernate:
+      # turn off the hibernate auto-creation of the tables from the entity objects
+      ddl-auto: none
+    open-in-view: false
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: ${KNOWLEDGE_DB_URL}
+    username: ${KNOWLEDGE_USER}
+    password: ${KNOWLEDGE_PASSWORD}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: never
+
+ms:
+  cors:
+    allowed-origins: "${SWAGGER_ALLOWED_ORIGINS:http://localhost:8080}"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs

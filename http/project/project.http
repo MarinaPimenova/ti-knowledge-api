@@ -1,0 +1,10 @@
+# get all projects
+GET http://localhost:8081/api/v1/projects
+Accept: application/json
+
+###
+### pagination
+GET http://localhost:8081/api/v1/projects?offset=0&size=15
+Accept: application/json
+
+###
