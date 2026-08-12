@@ -1,5 +1,8 @@
 package com.wk.ti.config;
 
+import com.wk.ti.user.service.UserDetailExtractor;
+import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.NonNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,21 +12,18 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.wk.ti.user.util.SecurityContextUtil.getAuthorities;
-
-@SuppressWarnings("unchecked")
 @Component
+@RequiredArgsConstructor
 public class CustomGrantedAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+    private final UserDetailExtractor userDetailExtractor;
 
     @Override
-    public Collection<GrantedAuthority> convert(Jwt jwt) {
+    public Collection<GrantedAuthority> convert(@NonNull Jwt jwt) {
         // Extract roles from custom claim
-        Map<String, Object> attributes = jwt.getClaims();
-        List<String> roles = getAuthorities((List<String>) attributes.get("cognito:groups"));
 
+        List<String> roles = userDetailExtractor.extractor(jwt).getRoles();
         // If roles claim is not present, return empty list of authorities
         if (roles == null) {
             return Collections.emptyList();
