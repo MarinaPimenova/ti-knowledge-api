@@ -14,9 +14,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # IMAGE_NAME is set in the following step to ensure lowercase repository path
-      # (GitHub expressions don't provide a portable toLower operation here)
 
     steps:
       - uses: actions/checkout@v4
