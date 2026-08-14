@@ -96,7 +96,7 @@ The application requires the following environment variables:
 KNOWLEDGE_DB_URL
 KNOWLEDGE_USER
 KNOWLEDGE_PASSWORD
-OKTA_OAUTH2_ISSUER
+OKTA_DOMAIN
 ```
 
 The server port can be changed with:
