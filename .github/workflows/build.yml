@@ -23,8 +23,7 @@ jobs:
       - name: Show repository name
         run: |
           echo "-----------------------------------------------"
-          echo "Repository: ${{ github.event.repository.name }}"
-          echo "Repo: ${{ env.GITHUB_REPOSITORY }}"
+          echo "Repo: ${{ github.repository }}"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -53,16 +52,16 @@ jobs:
 #           file: ./Dockerfile
           push: false
           tags: |
-            ghcr.io/${{ env.GITHUB_REPOSITORY }}:ci-${{ github.sha }}
-            ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest
+            ghcr.io/${{ github.repository }}:ci-${{ github.sha }}
+            ghcr.io/${{ github.repository }}:latest
  
       - name: Push image to GHCR
         run: |
-            docker push ghcr.io/${{ env.GITHUB_REPOSITORY }}:ci-${{ github.sha }}
-            docker push ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest
+            docker push ghcr.io/${{ github.repository }}:ci-${{ github.sha }}
+            docker push ghcr.io/${{ github.repository }}:latest
  
       - name: Remove local images
         run: |
-            docker image rm ghcr.io/${{ env.GITHUB_REPOSITORY }}:ci-${{ github.sha }}
-            docker image rm ghcr.io/${{ env.GITHUB_REPOSITORY }}:latest
+            docker image rm ghcr.io/${{ github.repository }}:ci-${{ github.sha }}
+            docker image rm ghcr.io/${{ github.repository }}:latest
  
