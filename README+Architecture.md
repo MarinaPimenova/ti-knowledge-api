@@ -368,13 +368,13 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://${OKTA_OAUTH2_ISSUER}/
+          issuer-uri: https://${OKTA_DOMAIN}/
 ```
 
 The following environment variable is required:
 
 ```text
-OKTA_OAUTH2_ISSUER
+OKTA_DOMAIN
 ```
 
 ---
