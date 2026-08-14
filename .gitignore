@@ -17,3 +17,5 @@ out/
 src/main/resources/application-local.yaml
 http/**/*-local.http
 
+.vscode/
+.env
