@@ -14,11 +14,16 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    env:
-#      IMAGE_NAME: ghcr.io/${{ github.repository }}
+    env:
+      # IMAGE_NAME is set in the following step to ensure lowercase repository path
+      # (GitHub expressions don't provide a portable toLower operation here)
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Lowercase repository name for image tag
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
 
       - name: Set up JDK 21 and cache Gradle
         uses: actions/setup-java@v4
@@ -27,17 +32,9 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      - name: Put var to GITHUB_ENV
-        run: |
-          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
-
-#      - name: Read var from GITHUB_ENV
-#        run: |
-#          echo "IMAGE_NAME= ${{ env.IMAGE_NAME }}"
-
       - name: Build project
         run: |
-          ./gradlew --no-daemon --refresh-dependencies build -x test
+          ./gradlew --no-daemon build
 
       - name: Log in to GHCR
         if: github.event_name != 'pull_request'
