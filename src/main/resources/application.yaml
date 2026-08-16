@@ -51,6 +51,9 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
 
   tracing:
     sampling:
@@ -76,3 +79,7 @@ ms:
 springdoc:
   api-docs:
     path: /v3/api-docs
+
+group:
+  admin:
+    - mnfpma

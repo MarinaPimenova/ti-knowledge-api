@@ -1,12 +1,51 @@
 # get all projects
-GET http://localhost:8081/api/v1/questions
+GET http://localhost:8081/api/v1/knowledge/questions
 Accept: application/json
 Authorization: Bearer <JWT>
 
 ###
 ### pagination
-GET http://localhost:8081/api/v1/questions?offset=0&size=15
+GET http://localhost:8081/api/v1/knowledge/questions?offset=0&size=15
 Accept: application/json
 Authorization: Bearer <JWT>
 
+###
+
+POST http://localhost:8081/api/v1/knowledge/questions
+Content-Type: application/json
+Authorization: Bearer <JWT>
+
+{
+  "question": "What is Spring Boot?",
+  "shortAnswer": "Spring Boot simplifies Spring application development.",
+  "detailedAnswer": "It provides auto-configuration and production-ready defaults.",
+  "questionLevelId": 2,
+  "codeExample": {
+    "language": "JAVA",
+    "sourceCode": "SpringApplication.run(App.class, args);"
+  },
+  "tagIds": [1, 2],
+  "projectIds": [1],
+  "resources": [
+    {
+      "url": "https://spring.io/projects/spring-boot",
+      "description": "Spring Boot documentation"
+    }
+  ]
+}
+###
+
+POST http://localhost:8081/api/v1/knowledge/questions
+Content-Type: application/json
+
+{
+  "question": "What is durability?",
+  "shortAnswer": "Durability ensures that changes that were applied to DB during successful transaction will be saved even if system failures.",
+  "questionLevelId": 1,
+  "tagIds": [
+    17
+  ],
+  "projectIds": [],
+  "resources": []
+}
 ###

@@ -2,15 +2,22 @@ package com.wk.ti.observability;
 
 @SuppressWarnings("unused")
 public class MetricsContract {
-    public static final String METRIC_QUESTIONS_REQUEST_COUNT = "ti.questions.request";
-    public static final String METRIC_QUESTIONS_CREATED_COUNT = "ti.questions.created";
-    public static final String METRIC_QUESTIONS_UPDATED_COUNT = "ti.questions.updated";
-    public static final String METRIC_QUESTIONS_DELETED_COUNT = "ti.questions.deleted";
-    public static final String METRIC_IMPORTS_REQUESTS_COUNT = "ti.imports.request";
-    public static final String METRIC_SUCCESSFUL_IMPORTS_COUNT = "ti.imports.successful";
-    public static final String METRIC_FAILED_IMPORTS_COUNT = "ti.imports.failed";
-    public static final String METRIC_EXPORTS_REQUESTS_COUNT = "ti.exports.request";
-    public static final String METRIC_SUCCESSFUL_EXPORTS_COUNT = "ti.exports.successful";
-    public static final String METRIC_FAILED_EXPORTS_COUNT = "ti.exports.failed";
+    public static final String METRIC_QUESTIONS_REQUEST_COUNT = "ti.question.request";
+    public static final String METRIC_QUESTION_CREATED_TOTAL = "ti.question.created.total";
+    public static final String METRIC_QUESTION_CREATE_FAILED_TOTAL = "ti.question.created.failed.total";
 
+    public static final String METRIC_IMPORTS_REQUESTS_COUNT = "ti.import.request";
+    public static final String METRIC_SUCCESSFUL_IMPORTS_COUNT = "ti.import.successful";
+    public static final String METRIC_FAILED_IMPORTS_COUNT = "ti.import.failed";
+
+    public static final String METRIC_EXPORTS_REQUESTS_COUNT = "ti.export.request";
+    public static final String METRIC_SUCCESSFUL_EXPORTS_COUNT = "ti.export.successful";
+    public static final String METRIC_FAILED_EXPORTS_COUNT = "ti.export.failed";
+
+    public static final String METRIC_QUESTION_CREATE_DURATION =
+            "ti.question.create.duration";
+
+    public static final String METRIC_QUESTION_UPDATE_DURATION ="ti.question.update.duration";
+    public static final String METRIC_QUESTION_UPDATED_TOTAL = "ti.question.updated.total";
+    public static final String METRIC_QUESTION_UPDATE_FAILED_TOTAL = "ti.question.updated.failed.total";
 }
