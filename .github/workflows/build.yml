@@ -1,10 +1,10 @@
-name: Build and package
+name: CI workflow
 
 on:
   push:
-    branches: [main, master, 'feature/**']
+    branches: [main, 'feature/**']
   pull_request:
-    branches: [main, master]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -18,10 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Lowercase repository name for image tag
-        run: |
-          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
-
       - name: Set up JDK 21 and cache Gradle
         uses: actions/setup-java@v5
         with:
@@ -33,8 +29,33 @@ jobs:
         run: |
           ./gradlew --no-daemon build
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: app-jar
+          path: build/libs/*.jar
+
+  publish:
+    name: Build image & Publish
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Download jar artifact
+        uses: actions/download-artifact@v6
+        with:
+          name: app-jar
+          path: build/libs
+
+      - name: Lowercase repository name for image tag
+        run: |
+          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+
       - name: Log in to GHCR
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -42,7 +63,6 @@ jobs:
           password: ${{ secrets.GH_TOKEN }}
 
       - name: Build and push Docker image
-        if: github.event_name != 'pull_request'
         uses: docker/build-push-action@v7
         with:
           context: .
