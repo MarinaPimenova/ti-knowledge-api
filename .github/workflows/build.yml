@@ -18,10 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Lowercase repository name for image tag
-        run: |
-          echo "IMAGE_NAME=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
-
       - name: Set up JDK 21 and cache Gradle
         uses: actions/setup-java@v5
         with:
