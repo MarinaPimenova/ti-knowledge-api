@@ -1,12 +1,7 @@
 package com.wk.ti.question.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -17,12 +12,12 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Builder
 public class Question extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "question_id_seq_gen", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "question_id_seq_gen", sequenceName = "knowledge.question_id_seq_gen", allocationSize = 1)
+    @SequenceGenerator(name = "question_id_seq_gen", sequenceName = "knowledge.question_id_seq",
+            allocationSize = 100)
     private Long id;
     @Column(name = "question_level_id")
     private Long questionLevelId;

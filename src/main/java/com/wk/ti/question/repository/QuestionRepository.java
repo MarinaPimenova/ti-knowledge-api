@@ -3,12 +3,16 @@ package com.wk.ti.question.repository;
 import com.wk.ti.question.model.Question;
 import com.wk.ti.question.model.QuestionProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-@SuppressWarnings("SqlResolve")
+import org.springframework.stereotype.Repository;
+
+@Repository
+@SuppressWarnings({"SqlResolve", "SqlSignature"})
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query(value = """
@@ -20,7 +24,14 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
                    qdp.description,
                    qdp.projectName
             from knowledge.question_dashboard_projection qdp
-            where qdp.updatedBy = 'test' or (qdp.updatedBy is null and qdp.createdBy = 'SYSTEM')
             """, nativeQuery = true)
-    List<QuestionProjection> findAllQuestion(@Param("user") String user);
+    List<QuestionProjection> findAllQuestion();
+
+    @Modifying
+    @Query(value = """
+            call knowledge.delete_question(:questionId, :user)
+            """, nativeQuery = true)
+    void remove(
+            @Param("questionId") Long id,
+            @Param("user") String user);
 }
