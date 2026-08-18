@@ -18,11 +18,11 @@ import java.util.Objects;
 import static com.wk.ti.config.CustomGrantedAuthoritiesConverter.ROLE_TEMPLATE;
 import static java.lang.String.format;
 
-@SuppressWarnings({"unchecked", "unused"})
+@SuppressWarnings({"unchecked", "unused", "SuspiciousMethodCalls"})
 @Component
 @RequiredArgsConstructor
 public class UserDetailExtractor {
-    private static final String USER_ROLE = "user";
+    public static final String USER_ROLE = "user";
     private static final String MODERATOR_ROLE = "moderator";
     private static final String ADMIN_ROLE = "admin";
     private static final String USER_ID = "sub";
