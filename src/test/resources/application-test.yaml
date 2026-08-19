@@ -28,10 +28,7 @@ spring:
     open-in-view: false
 
   liquibase:
-    enabled: true
-    change-log: classpath:db/liquibase-changelog.xml
-    default-schema: knowledge
-    liquibase-schema: knowledge
+    enabled: false
 
 management:
   endpoints:
