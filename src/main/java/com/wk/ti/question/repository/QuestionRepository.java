@@ -29,9 +29,9 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Modifying
     @Query(value = """
-            call knowledge.delete_question(:questionId, :user)
+            call knowledge.delete_question(:id, :user)
             """, nativeQuery = true)
     void remove(
-            @Param("questionId") Long id,
+            @Param("id") Long id,
             @Param("user") String user);
 }

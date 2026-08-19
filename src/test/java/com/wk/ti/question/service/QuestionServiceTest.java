@@ -148,7 +148,7 @@ class QuestionServiceTest {
         Long id = question.getId();
 
         // when
-        questionRepository.remove(id, "john_doe");
+        questionService.remove(id);
 
         // then
         assertThat(questionRepository.findById(id)).isEmpty();
