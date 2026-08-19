@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.Instant;
 
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Import({ContainerConfiguration.class, MetricsTestConfig.class})
 @EnabledIfDocker // <--- Disables class execution cleanly before Spring Boot context attempts container initialization
+@ActiveProfiles("test")
 class QuestionServiceTest {
 
     private QuestionService questionService;

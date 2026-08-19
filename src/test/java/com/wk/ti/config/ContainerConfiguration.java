@@ -1,9 +1,12 @@
 package com.wk.ti.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
 import org.testcontainers.postgresql.PostgreSQLContainer;
+
+import javax.sql.DataSource;
 
 @TestConfiguration(proxyBeanMethods = false)
 public class ContainerConfiguration {
@@ -11,6 +14,17 @@ public class ContainerConfiguration {
     @Bean
     @ServiceConnection
     PostgreSQLContainer postgreSQLContainer() {
-        return new PostgreSQLContainer("postgres:17");
+        return new PostgreSQLContainer("postgres:17")
+                .withInitScript("db/_01-schema/_001_create_schema.sql"); // Place 'CREATE SCHEMA IF NOT EXISTS knowledge;' in src/test/resources/init-schema.sql
+    }
+
+    @Bean
+    public SpringLiquibase liquibase(DataSource dataSource) {
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setDataSource(dataSource);
+        liquibase.setChangeLog("classpath:db/liquibase-changelog.xml");
+        liquibase.setDefaultSchema("knowledge");
+        liquibase.setLiquibaseSchema("knowledge");
+        return liquibase;
     }
 }

@@ -13,17 +13,22 @@ info:
 
 spring:
   application:
-    name: ${info.app.name}
+    name: ${info.app.name:test-app}
   liquibase:
     enabled: true
     change-log: classpath:db/liquibase-changelog.xml
+    default-schema: knowledge
+    liquibase-schema: knowledge
+    # Instructs Liquibase to execute 'CREATE SCHEMA IF NOT EXISTS knowledge' on startup
+    init-parameters:
+      createLiquibaseTable: true
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: knowledge
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate # Use 'validate' in tests to ensure entities match Liquibase schema
     open-in-view: false
 
   datasource:
