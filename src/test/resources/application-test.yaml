@@ -14,25 +14,22 @@ info:
 spring:
   application:
     name: ${info.app.name}
-
+  liquibase:
+    enabled: true
+    change-log: classpath:db/liquibase-changelog.xml
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: knowledge
-        hbm2ddl:
-          auto: none
-          jdbc:
-            batch_size: 30
     hibernate:
-      # turn off the hibernate auto-creation of the tables from the entity objects
       ddl-auto: none
     open-in-view: false
+
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/knowledge_db
-    username: test
-    password: test
+    hikari:
+      maximum-pool-size: 5
+
 
 management:
   endpoints:
