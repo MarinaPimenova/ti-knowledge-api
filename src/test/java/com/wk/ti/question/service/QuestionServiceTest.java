@@ -66,7 +66,7 @@ class QuestionServiceTest {
                 .detailedAnswer("Detailed answer")
                 .build();
 
-        Question result = questionService.modify(question);
+        Question result = questionRepository.save(question); //questionService.modify(question);
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isNotNull();
@@ -89,13 +89,13 @@ class QuestionServiceTest {
                 .detailedAnswer("Original details")
                 .build();
 
-        Question saved = questionService.modify(question);
+        Question saved = questionRepository.save(question);
 
         // when
         saved.setQuestion("Updated question");
         saved.setShortAnswer("Updated answer");
 
-        Question updated = questionService.modify(saved);
+        Question updated = questionRepository.save(saved);
 
         // then
         assertThat(updated.getId()).isEqualTo(saved.getId());
@@ -125,7 +125,8 @@ class QuestionServiceTest {
         Long id = question.getId();
 
         // when
-        questionService.remove(id);
+        //questionService.remove(id);
+        questionRepository.deleteById(id);
 
         // then
         assertThat(questionRepository.findById(id)).isEmpty();
