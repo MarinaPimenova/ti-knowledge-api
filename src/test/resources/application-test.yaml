@@ -10,31 +10,28 @@ info:
   app:
     name: ti-knowledge-api
     version: '@project.version@'
-
 spring:
   application:
     name: ${info.app.name:test-app}
-  liquibase:
-    enabled: true
-    change-log: classpath:db/liquibase-changelog.xml
-    default-schema: knowledge
-    liquibase-schema: knowledge
-    # Instructs Liquibase to execute 'CREATE SCHEMA IF NOT EXISTS knowledge' on startup
-    init-parameters:
-      createLiquibaseTable: true
+
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: knowledge
     hibernate:
-      ddl-auto: validate # Use 'validate' in tests to ensure entities match Liquibase schema
+      ddl-auto: validate # Ensures Hibernate matches the schema created by Liquibase
     open-in-view: false
 
-  datasource:
-    hikari:
-      maximum-pool-size: 5
-
+  liquibase:
+    enabled: true
+    change-log: classpath:db/liquibase-changelog.xml
+    default-schema: knowledge
+    liquibase-schema: knowledge
 
 management:
   endpoints:

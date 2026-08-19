@@ -1,8 +1,8 @@
 package com.wk.ti.question.service;
 
-import com.wk.ti.config.ContainerConfiguration;
 import com.wk.ti.config.EnabledIfDocker;
 import com.wk.ti.config.MetricsTestConfig;
+import com.wk.ti.config.TestApplicationInitializer;
 import com.wk.ti.question.model.Question;
 import com.wk.ti.question.repository.QuestionDetailsRepository;
 import com.wk.ti.question.repository.QuestionRepository;
@@ -15,20 +15,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.context.annotation.Import;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.time.Instant;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import({ContainerConfiguration.class, MetricsTestConfig.class})
-@EnabledIfDocker // <--- Disables class execution cleanly before Spring Boot context attempts container initialization
+@Import(MetricsTestConfig.class)
+@ContextConfiguration(initializers = TestApplicationInitializer.class)
+@EnabledIfDocker
 @ActiveProfiles("test")
 class QuestionServiceTest {
 
@@ -43,7 +45,6 @@ class QuestionServiceTest {
 
     @BeforeEach
     void setUp() {
-
         questionService = new QuestionService(
                 questionRepository,
                 detailsRepository,
@@ -58,7 +59,6 @@ class QuestionServiceTest {
 
     @Test
     void shouldSaveQuestion() {
-
         Question question = Question.builder()
                 .questionLevelId(1L)
                 .question("What is Java?")
@@ -81,7 +81,6 @@ class QuestionServiceTest {
 
     @Test
     void shouldModifyQuestion() {
-
         // given
         Question question = Question.builder()
                 .questionLevelId(1L)
@@ -105,16 +104,13 @@ class QuestionServiceTest {
                 .findById(saved.getId())
                 .orElseThrow();
 
-        assertThat(persisted.getQuestion())
-                .isEqualTo("Updated question");
-
-        assertThat(persisted.getShortAnswer())
-                .isEqualTo("Updated answer");
+        assertThat(persisted.getQuestion()).isEqualTo("Updated question");
+        assertThat(persisted.getShortAnswer()).isEqualTo("Updated answer");
     }
 
     @Test
     void shouldRemoveQuestion() {
-        // given: set security context so static UserDetailExtractor.getUser() succeeds
+        // given
         setupAuthenticatedUser("john_doe");
 
         Question question = questionRepository.saveAndFlush(
@@ -144,7 +140,7 @@ class QuestionServiceTest {
                 .build();
 
         UsernamePasswordAuthenticationToken auth =
-                new UsernamePasswordAuthenticationToken(jwt, null, java.util.Collections.emptyList());
+                new UsernamePasswordAuthenticationToken(jwt, null, Collections.emptyList());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
     }

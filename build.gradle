@@ -48,7 +48,6 @@ dependencies {
     runtimeOnly 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
     implementation 'org.liquibase:liquibase-core'
-
     runtimeOnly 'org.postgresql:postgresql'
 
     // Context Propagation for Web Clients / Feign / RestTemplate
@@ -66,6 +65,7 @@ dependencies {
     testImplementation 'org.testcontainers:testcontainers-junit-jupiter'
 
     testImplementation 'org.testcontainers:testcontainers-postgresql'
+
     testCompileOnly 'org.projectlombok:lombok'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     testAnnotationProcessor 'org.projectlombok:lombok'
@@ -73,6 +73,14 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+    //environment("TESTCONTAINERS_CHECKS_DISABLE", "true")
+// Disable Ryuk, as it requires running in privileged mode, which can cause problems in the pipeline.
+// Containers in the pipeline should be cleaned by the pipeline itself.
+    environment("TESTCONTAINERS_RYUK_DISABLED", "true")
+// Configure the internal Docker registry
+// Important! The slash (/) must be at the end of TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX
+// environment("TESTCONTAINERS_NEXUS_URL", "...")
+// environment("TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX", ".../.../")
 }
 
 tasks.processResources {
