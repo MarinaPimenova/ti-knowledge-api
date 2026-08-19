@@ -19,6 +19,8 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://${OKTA_DOMAIN}/
+  liquibase:
+    enabled: false
   jpa:
     properties:
       hibernate:

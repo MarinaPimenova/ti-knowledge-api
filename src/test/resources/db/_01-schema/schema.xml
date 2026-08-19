@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="1" author="pm">
+        <sqlFile
+                path="_001_create_schema.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="2" author="pm">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                SELECT count(*)
+                FROM pg_tables
+                WHERE schemaname = 'knowledge'
+                  AND tablename =
+                      'project'
+            </sqlCheck>
+        </preConditions>
+        <sqlFile
+                path="_002_create_project_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="3" author="pm">
+        <sqlFile
+                path="_003_create_category_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="4" author="pm">
+        <sqlFile
+                path="_004_create_tag_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="5" author="pm">
+        <sqlFile
+                path="_005_create_question_level_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="6" author="pm">
+        <sqlFile
+                path="_006_create_question_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="7" author="pm">
+        <sqlFile
+                path="_007_create_resource_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="7_2" author="pm">
+        <sqlFile
+                path="_007_2_create_question_resource_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="8" author="pm">
+        <sqlFile
+                path="_008_create_code_example_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="8_2" author="pm">
+        <sqlFile
+                path="_008_2_create_question_code_example_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="9" author="pm">
+        <sqlFile
+                path="_009_create_question_tag_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+    <changeSet id="10" author="pm">
+        <sqlFile
+                path="_010_create_project_question_table.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
+
+</databaseChangeLog>

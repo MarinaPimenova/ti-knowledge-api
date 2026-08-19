@@ -10,29 +10,25 @@ info:
   app:
     name: ti-knowledge-api
     version: '@project.version@'
-
 spring:
   application:
-    name: ${info.app.name}
+    name: ${info.app.name:test-app}
+
+  datasource:
+    hikari:
+      maximum-pool-size: 5
 
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         default_schema: knowledge
-        hbm2ddl:
-          auto: none
-          jdbc:
-            batch_size: 30
     hibernate:
-      # turn off the hibernate auto-creation of the tables from the entity objects
-      ddl-auto: none
+      ddl-auto: validate # Ensures Hibernate matches the schema created by Liquibase
     open-in-view: false
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/knowledge_db
-    username: test
-    password: test
+
+  liquibase:
+    enabled: false
 
 management:
   endpoints:

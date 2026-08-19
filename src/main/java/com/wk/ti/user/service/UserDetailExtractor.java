@@ -93,7 +93,7 @@ public class UserDetailExtractor {
         if (auth() == null) {
             throw new NotAuthorizedException("User is not authorized.");
         }
-        //return auth().getName().toLowerCase();
+
         return (String) ((Jwt) Objects.requireNonNull(auth().getPrincipal())).getClaims().get("nickname");
     }
 
