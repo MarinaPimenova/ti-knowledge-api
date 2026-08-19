@@ -80,7 +80,6 @@ class QuestionServiceTest {
                 .detailedAnswer("Detailed answer")
                 .build();
         // when
-
         Question result = questionService.modify(question);
 
         // then
@@ -109,7 +108,7 @@ class QuestionServiceTest {
                 .detailedAnswer("Original details")
                 .build();
 
-        Question saved = questionService.modify(question); //questionRepository.save(question);
+        Question saved = questionService.modify(question);
 
         // when
         saved.setQuestion("Updated question");
@@ -135,15 +134,14 @@ class QuestionServiceTest {
                 .code("A1")
                 .build();
         QuestionLevel savedQuestionLevel = questionLevelRepository.saveAndFlush(qLevel);
+        Question q = Question.builder()
+                .questionLevelId(savedQuestionLevel.getId())
+                .question("Original question")
+                .shortAnswer("Original answer")
+                .detailedAnswer("Original details")
+                .build();
 
-        Question question = questionRepository.saveAndFlush(
-                Question.builder()
-                        .questionLevelId(savedQuestionLevel.getId())
-                        .question("Question to delete")
-                        .shortAnswer("Answer")
-                        .detailedAnswer("Details")
-                        .build()
-        );
+        Question question = questionService.modify(q);
 
         Long id = question.getId();
 
