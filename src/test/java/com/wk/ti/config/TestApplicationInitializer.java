@@ -9,6 +9,7 @@ import org.testcontainers.utility.DockerImageName;
 public class TestApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
     public static final String POSTGRES_IMAGE = "postgres:17";
+    private static final String DB_SCHEMA = "knowledge";
 
     @SuppressWarnings("resource")
     public static final PostgreSQLContainer<?> POSTGRES_CONTAINER =
@@ -24,11 +25,15 @@ public class TestApplicationInitializer implements ApplicationContextInitializer
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
+        // Force PostgreSQL currentSchema on connection string
+        String jdbcUrl = POSTGRES_CONTAINER.getJdbcUrl() + "?currentSchema=" + DB_SCHEMA;
+
         TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
                 applicationContext,
-                "spring.datasource.url=" + POSTGRES_CONTAINER.getJdbcUrl(),
+                "spring.datasource.url=" + jdbcUrl,
                 "spring.datasource.username=" + POSTGRES_CONTAINER.getUsername(),
-                "spring.datasource.password=" + POSTGRES_CONTAINER.getPassword()
+                "spring.datasource.password=" + POSTGRES_CONTAINER.getPassword(),
+                "spring.liquibase.enabled=true"
         );
     }
 }
