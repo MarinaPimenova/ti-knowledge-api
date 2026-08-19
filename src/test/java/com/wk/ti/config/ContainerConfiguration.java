@@ -14,8 +14,7 @@ public class ContainerConfiguration {
     @Bean
     @ServiceConnection
     PostgreSQLContainer postgreSQLContainer() {
-        return new PostgreSQLContainer("postgres:17")
-                .withInitScript("db/_01-schema/_001_create_schema.sql"); // Place 'CREATE SCHEMA IF NOT EXISTS knowledge;' in src/test/resources/init-schema.sql
+        return new PostgreSQLContainer("postgres:17");
     }
 
     @Bean
