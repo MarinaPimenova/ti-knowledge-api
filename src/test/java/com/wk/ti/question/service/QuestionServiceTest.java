@@ -3,6 +3,8 @@ package com.wk.ti.question.service;
 import com.wk.ti.config.EnabledIfDocker;
 import com.wk.ti.config.MetricsTestConfig;
 import com.wk.ti.config.TestApplicationInitializer;
+import com.wk.ti.qlevel.model.QuestionLevel;
+import com.wk.ti.qlevel.repository.QuestionLevelRepository;
 import com.wk.ti.question.model.Question;
 import com.wk.ti.question.repository.QuestionDetailsRepository;
 import com.wk.ti.question.repository.QuestionRepository;
@@ -20,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -32,12 +35,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(initializers = TestApplicationInitializer.class)
 @EnabledIfDocker
 @ActiveProfiles("test")
+@Transactional
 class QuestionServiceTest {
 
     private QuestionService questionService;
 
     @Autowired
     private QuestionRepository questionRepository;
+    @Autowired
+    QuestionLevelRepository questionLevelRepository;
     @Autowired
     private QuestionDetailsRepository detailsRepository;
     @Autowired
@@ -62,15 +68,22 @@ class QuestionServiceTest {
 
     @Test
     void shouldSaveQuestion() {
+        // given
+        QuestionLevel qLevel = QuestionLevel.builder()
+                .code("A1")
+                .build();
+        QuestionLevel savedQuestionLevel = questionLevelRepository.saveAndFlush(qLevel);
         Question question = Question.builder()
-                .questionLevelId(1L)
+                .questionLevelId(savedQuestionLevel.getId())
                 .question("What is Java?")
                 .shortAnswer("Java is a programming language.")
                 .detailedAnswer("Detailed answer")
                 .build();
+        // when
 
         Question result = questionService.modify(question);
 
+        // then
         assertThat(result).isNotNull();
         assertThat(result.getId()).isNotNull();
 
@@ -85,8 +98,12 @@ class QuestionServiceTest {
     @Test
     void shouldModifyQuestion() {
         // given
+        QuestionLevel qLevel = QuestionLevel.builder()
+                .code("A1")
+                .build();
+        QuestionLevel savedQuestionLevel = questionLevelRepository.saveAndFlush(qLevel);
         Question question = Question.builder()
-                .questionLevelId(1L)
+                .questionLevelId(savedQuestionLevel.getId())
                 .question("Original question")
                 .shortAnswer("Original answer")
                 .detailedAnswer("Original details")
@@ -114,9 +131,14 @@ class QuestionServiceTest {
     @Test
     void shouldRemoveQuestion() {
         // given
+        QuestionLevel qLevel = QuestionLevel.builder()
+                .code("A1")
+                .build();
+        QuestionLevel savedQuestionLevel = questionLevelRepository.saveAndFlush(qLevel);
+
         Question question = questionRepository.saveAndFlush(
                 Question.builder()
-                        .questionLevelId(1L)
+                        .questionLevelId(savedQuestionLevel.getId())
                         .question("Question to delete")
                         .shortAnswer("Answer")
                         .detailedAnswer("Details")
