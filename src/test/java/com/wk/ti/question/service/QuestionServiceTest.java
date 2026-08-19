@@ -69,7 +69,7 @@ class QuestionServiceTest {
                 .detailedAnswer("Detailed answer")
                 .build();
 
-        Question result = questionRepository.save(question); //questionService.modify(question);
+        Question result = questionService.modify(question);
 
         assertThat(result).isNotNull();
         assertThat(result.getId()).isNotNull();
@@ -92,7 +92,7 @@ class QuestionServiceTest {
                 .detailedAnswer("Original details")
                 .build();
 
-        Question saved = questionRepository.save(question);
+        Question saved = questionService.modify(question); //questionRepository.save(question);
 
         // when
         saved.setQuestion("Updated question");
@@ -114,8 +114,6 @@ class QuestionServiceTest {
     @Test
     void shouldRemoveQuestion() {
         // given
-        //setupAuthenticatedUser("john_doe");
-
         Question question = questionRepository.saveAndFlush(
                 Question.builder()
                         .questionLevelId(1L)
@@ -128,8 +126,7 @@ class QuestionServiceTest {
         Long id = question.getId();
 
         // when
-        //questionService.remove(id);
-        questionRepository.deleteById(id);
+        questionRepository.remove(id, "john_doe");
 
         // then
         assertThat(questionRepository.findById(id)).isEmpty();

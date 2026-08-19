@@ -7,11 +7,11 @@
             http://www.liquibase.org/xml/ns/dbchangelog
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <include
-            file="_01-schema/schema.xml"
-            relativeToChangelogFile="true"/>
-
-    <include
-            file="_05-function/function.xml"
-            relativeToChangelogFile="true"/>
+    <changeSet id="6" author="pm">
+        <sqlFile
+                path="_006_delete_question.sql"
+                relativeToChangelogFile="true"
+                encoding="UTF-8"
+                splitStatements="false"/>
+    </changeSet>
 </databaseChangeLog>
