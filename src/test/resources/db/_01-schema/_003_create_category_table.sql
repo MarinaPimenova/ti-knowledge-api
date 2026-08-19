@@ -1,5 +1,3 @@
--- _003_create_category_table.sql
-
 CREATE TABLE IF NOT EXISTS knowledge.category
 (
     id              bigserial PRIMARY KEY,

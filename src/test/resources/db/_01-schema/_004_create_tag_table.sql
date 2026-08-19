@@ -1,8 +1,3 @@
--- _003_2_create_tag_table.sql
-
--- Notice that tag only needs to be unique within a category,
--- so the same tag name could exist in different contexts if needed.
-
 CREATE TABLE IF NOT EXISTS knowledge.tag
 (
     id            bigserial PRIMARY KEY,
