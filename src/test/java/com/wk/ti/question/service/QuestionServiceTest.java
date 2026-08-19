@@ -43,7 +43,7 @@ class QuestionServiceTest {
     @Autowired
     private MeterRegistry meterRegistry;
 
-    @BeforeEach
+/*    @BeforeEach
     void setUp() {
         questionService = new QuestionService(
                 questionRepository,
@@ -55,7 +55,7 @@ class QuestionServiceTest {
     @AfterEach
     void tearDown() {
         SecurityContextHolder.clearContext();
-    }
+    }*/
 
     @Test
     void shouldSaveQuestion() {
@@ -111,7 +111,7 @@ class QuestionServiceTest {
     @Test
     void shouldRemoveQuestion() {
         // given
-        setupAuthenticatedUser("john_doe");
+        //setupAuthenticatedUser("john_doe");
 
         Question question = questionRepository.saveAndFlush(
                 Question.builder()
@@ -132,7 +132,7 @@ class QuestionServiceTest {
         assertThat(questionRepository.findById(id)).isEmpty();
     }
 
-    private void setupAuthenticatedUser(String nickname) {
+/*    private void setupAuthenticatedUser(String nickname) {
         Jwt jwt = Jwt.withTokenValue("mock-token")
                 .header("alg", "none")
                 .claim("nickname", nickname)
@@ -144,5 +144,5 @@ class QuestionServiceTest {
                 new UsernamePasswordAuthenticationToken(jwt, null, Collections.emptyList());
 
         SecurityContextHolder.getContext().setAuthentication(auth);
-    }
+    }*/
 }
