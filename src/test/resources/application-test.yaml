@@ -1,6 +1,77 @@
+server:
+  port: ${SERVER_PORT:8081}
+  address: 0.0.0.0 # Binds to all network interfaces so Docker bridge can connect
+  servlet:
+    context-path: /
+    session:
+      timeout: 3600 # redefine default 30m by 1 hour
+
+info:
+  app:
+    name: ti-knowledge-api
+    version: '@project.version@'
 spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:9999
+  application:
+    name: ${info.app.name:test-app}
+
+  datasource:
+    hikari:
+      maximum-pool-size: 5
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: knowledge
+    hibernate:
+      ddl-auto: validate # Ensures Hibernate matches the schema created by Liquibase
+    open-in-view: false
+
+  liquibase:
+    enabled: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+  endpoint:
+    prometheus:
+      access: read_only
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+
+  tracing:
+    sampling:
+      probability: ${TRACING_SAMPLING_PROBABILITY:1.0}
+    export:
+      zipkin:
+        enabled: true
+        endpoint: ${MANAGEMENT_TRACING_EXPORT_ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
+
+logging:
+  level:
+    com.wk.ti: debug
+    org.springframework: info
+  # Enable Native JSON Structured Logging (Spring Boot 3.4+)
+  structured:
+    format:
+      console: ecs # Emits logs in ECS JSON format containing service, traceId, spanId
+
+ms:
+  cors:
+    allowed-origins: "${SWAGGER_ALLOWED_ORIGINS:http://localhost:8080}"
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+
+group:
+  admin:
+    - test

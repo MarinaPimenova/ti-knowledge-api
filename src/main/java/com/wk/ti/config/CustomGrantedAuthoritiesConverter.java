@@ -14,9 +14,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
 @Component
 @RequiredArgsConstructor
 public class CustomGrantedAuthoritiesConverter implements Converter<Jwt, Collection<GrantedAuthority>> {
+    public static final String ROLE_TEMPLATE = "ROLE_%s";
     private final UserDetailExtractor userDetailExtractor;
 
     @Override
@@ -31,7 +34,7 @@ public class CustomGrantedAuthoritiesConverter implements Converter<Jwt, Collect
 
         // Map roles to GrantedAuthorities
         return roles.stream()
-                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()))
+                .map(role -> new SimpleGrantedAuthority(format(ROLE_TEMPLATE, role.toUpperCase())))
                 .collect(Collectors.toList());
     }
 }
