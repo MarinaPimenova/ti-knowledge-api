@@ -33,7 +33,7 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feature/ci-build'
         with:
           name: app-jar
           path: build/libs/*.jar
