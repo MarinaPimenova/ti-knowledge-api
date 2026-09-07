@@ -7,10 +7,7 @@ import com.wk.ti.knowledge.tag.service.TagService;
 import com.wk.ti.project.model.ProjectDto;
 import com.wk.ti.project.service.ProjectService;
 import com.wk.ti.qlevel.model.QuestionLevelDto;
-import com.wk.ti.question.model.CreateQuestionRequest;
-import com.wk.ti.question.model.Question;
-import com.wk.ti.question.model.QuestionDetails;
-import com.wk.ti.question.model.QuestionProjection;
+import com.wk.ti.question.model.*;
 import com.wk.ti.resource.model.ResourceDto;
 import com.wk.ti.resource.service.ResourceService;
 import io.micrometer.core.instrument.Counter;
@@ -19,6 +16,7 @@ import io.micrometer.core.instrument.Timer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -148,6 +146,10 @@ public class QuestionProcessor {
         return questionService.findAll();
     }
 
+    public List<QuestionProjection> findByPattern(String pattern) {
+        return questionService.findByPattern(pattern);
+    }
+
     private QuestionDetails toQuestionDetails(
             CreateQuestionRequest request) {
 
@@ -173,11 +175,11 @@ public class QuestionProcessor {
                         : request.resources()
                         .stream()
                         .map(resource ->
-                             new ResourceDto(
-                                     null,
-                                     resource.url(),
-                                     resource.description()
-                             )
+                                new ResourceDto(
+                                        null,
+                                        resource.url(),
+                                        resource.description()
+                                )
                         )
                         .toList();
 
@@ -206,7 +208,21 @@ public class QuestionProcessor {
                 resources,
                 projects,
                 null,
-                null
+                null,
+                OffsetDateTime.now(),
+                OffsetDateTime.now()
         );
+    }
+
+    public Long count() {
+        return questionService.questionCount();
+    }
+
+    public List<QuestionTagCountResponse> countByTags() {
+        return questionService.countByTags();
+    }
+
+    public List<RecentQuestionResponse> findRecent(int limit) {
+        return questionService.findRecent(limit);
     }
 }

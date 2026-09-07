@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-07T09:00:49.738Z",
+    "rangeLabel": "all",
+    "agents": [
+      "claude"
+    ],
+    "projectFilter": "all",
+    "totals": {
+      "sessions": 1,
+      "durationMs": 66994402,
+      "turns": 23,
+      "files": 22,
+      "netLines": 637,
+      "toolCallsTotal": 39,
+      "toolSuccessRate": 97.4,
+      "totalCostUSD": 1.3390722,
+      "cacheReadCostUSD": 0.5665121999999999,
+      "pricedSessions": 1
+    },
+    "unpricedModels": [],
+    "coverage": [
+      {
+        "agentName": "claude",
+        "total": 1,
+        "priced": 1,
+        "withLog": 1
+      }
+    ],
+    "userEmail": "marina_pimenova@epam.com",
+    "periodStart": "2026-09-06T14:24:12.725Z",
+    "periodEnd": "2026-09-07T09:00:47.127Z"
+  },
+  "sessions": [
+    {
+      "sessionId": "a66be1dd-123e-4fa0-a37a-17d50d8bbff6",
+      "agentName": "claude",
+      "provider": "ai-run-sso",
+      "title": "Please refactor `README.md` by adding the last section about \"how to run this microservice as standalone service\" and taking into account the following: - `src/main/resources/application.yaml` - and to have possibility to run it locally as one standalone microservice to check functionality so, please provide set http files for different cases. As a result, we will have: - the refactored `README.md` file: 1) structured existing sections. 2) + \"how to run locally and test functionality\" - it should be complete guide like: -what standalone docker compose should be run - see the list in `/Users/Marina_Pimenova/ti-2026/ti-gateway-api/docker` -set of http files under `/Users/Marina_Pimenova/ti-2026/ti-knowledge-api/http` folder to cover the main scenarios of this microservice.",
+      "project": "/Users/Marina_Pimenova/ti-2026/ti-knowledge-api",
+      "branch": "main",
+      "startTime": 1788704652725,
+      "durationMs": 66994402,
+      "turns": 23,
+      "fileOps": 22,
+      "linesAdded": 637,
+      "linesRemoved": 0,
+      "linesModified": 0,
+      "netLines": 637,
+      "filesChanged": 8,
+      "filesWritten": 8,
+      "filesEdited": 0,
+      "toolCallsTotal": 39,
+      "toolCallsSuccess": 38,
+      "toolCallsFailure": 1,
+      "models": [
+        "claude-sonnet-5"
+      ],
+      "languages": [
+        "markdown",
+        "yaml",
+        "java"
+      ],
+      "tools": [
+        {
+          "toolName": "Read",
+          "totalCalls": 17,
+          "successCount": 17,
+          "failureCount": 0,
+          "successRate": 100
+        },
+        {
+          "toolName": "Bash",
+          "totalCalls": 11,
+          "successCount": 11,
+          "failureCount": 0,
+          "successRate": 100
+        },
+        {
+          "toolName": "Write",
+          "totalCalls": 9,
+          "successCount": 8,
+          "failureCount": 1,
+          "successRate": 88.88888888888889
+        },
+        {
+          "toolName": "EnterPlanMode",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0,
+          "successRate": 100
+        },
+        {
+          "toolName": "ExitPlanMode",
+          "totalCalls": 1,
+          "successCount": 1,
+          "failureCount": 0,
+          "successRate": 100
+        }
+      ],
+      "tokens": {
+        "input": 6955,
+        "output": 23013,
+        "cacheRead": 1888374,
+        "cacheCreation": 67750,
+        "cacheCreation1h": 67750,
+        "total": 1986092
+      },
+      "costUSD": 1.3390722,
+      "cacheReadCostUSD": 0.5665121999999999,
+      "perModelCost": [
+        {
+          "model": "claude-sonnet-5",
+          "tokens": {
+            "input": 6955,
+            "output": 23013,
+            "cacheRead": 1888374,
+            "cacheCreation": 67750,
+            "cacheCreation1h": 67750,
+            "total": 1986092
+          },
+          "costUSD": 1.3390722,
+          "unpriced": false
+        }
+      ],
+      "hadLog": true,
+      "agentSessionFile": "/Users/Marina_Pimenova/.claude/projects/-Users-Marina-Pimenova-ti-2026-ti-knowledge-api/485aef2a-04d3-44b3-ab0b-572009c2306b.jsonl",
+      "costSeries": [
+        {
+          "t": 1788704677907,
+          "cost": 0.0855582,
+          "tokens": 55938
+        },
+        {
+          "t": 1788704689348,
+          "cost": 0.1549077,
+          "tokens": 116483
+        },
+        {
+          "t": 1788704704458,
+          "cost": 0.2052549,
+          "tokens": 180101
+        },
+        {
+          "t": 1788704711595,
+          "cost": 0.2604201,
+          "tokens": 248501
+        },
+        {
+          "t": 1788704723397,
+          "cost": 0.3144282,
+          "tokens": 320575
+        },
+        {
+          "t": 1788704778049,
+          "cost": 0.3553158,
+          "tokens": 394183
+        },
+        {
+          "t": 1788704789568,
+          "cost": 0.3996735,
+          "tokens": 470323
+        },
+        {
+          "t": 1788704793402,
+          "cost": 0.4308981,
+          "tokens": 547066
+        },
+        {
+          "t": 1788704808685,
+          "cost": 0.4862568,
+          "tokens": 627165
+        },
+        {
+          "t": 1788704825418,
+          "cost": 0.5307438,
+          "tokens": 708889
+        },
+        {
+          "t": 1788704833802,
+          "cost": 0.5761248,
+          "tokens": 792809
+        },
+        {
+          "t": 1788704874130,
+          "cost": 0.6306684,
+          "tokens": 878809
+        },
+        {
+          "t": 1788704897001,
+          "cost": 0.6721434,
+          "tokens": 965681
+        },
+        {
+          "t": 1788704936196,
+          "cost": 0.7602003,
+          "tokens": 1057979
+        },
+        {
+          "t": 1788704939424,
+          "cost": 0.8185083,
+          "tokens": 1150368
+        },
+        {
+          "t": 1788705126847,
+          "cost": 0.8715171,
+          "tokens": 1246883
+        },
+        {
+          "t": 1788705139383,
+          "cost": 0.9296232,
+          "tokens": 1345586
+        },
+        {
+          "t": 1788705148328,
+          "cost": 0.9821037,
+          "tokens": 1445508
+        },
+        {
+          "t": 1788705182711,
+          "cost": 1.0785186,
+          "tokens": 1549682
+        },
+        {
+          "t": 1788705186652,
+          "cost": 1.1341722,
+          "tokens": 1654030
+        },
+        {
+          "t": 1788705217792,
+          "cost": 1.2361827,
+          "tokens": 1764232
+        },
+        {
+          "t": 1788705222460,
+          "cost": 1.2943977,
+          "tokens": 1874795
+        },
+        {
+          "t": 1788705230559,
+          "cost": 1.3390722,
+          "tokens": 1986092
+        }
+      ],
+      "skillInvocations": [],
+      "agentInvocations": [],
+      "commandInvocations": [],
+      "sessionSource": "Pure chat"
+    }
+  ]
+}

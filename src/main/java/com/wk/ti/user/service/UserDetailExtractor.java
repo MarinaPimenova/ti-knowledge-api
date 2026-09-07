@@ -104,7 +104,7 @@ public class UserDetailExtractor {
         return auth().getAuthorities().contains(format(ROLE_TEMPLATE, ADMIN_ROLE.toUpperCase()));
     }
 
-    private static Authentication auth() {
+    public static Authentication auth() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 }

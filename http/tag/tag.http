@@ -1,12 +1,12 @@
-# get all projects
-GET http://localhost:8081/api/v1/projects
+# get all tags
+GET http://localhost:8081/api/v1/tags
 Accept: application/json
 Authorization: Bearer <JWT>
 
 ###
 
 # missing Authorization header -> expect 401 Unauthorized since /api/** is protected
-GET http://localhost:8081/api/v1/projects
+GET http://localhost:8081/api/v1/tags
 Accept: application/json
 
 ###

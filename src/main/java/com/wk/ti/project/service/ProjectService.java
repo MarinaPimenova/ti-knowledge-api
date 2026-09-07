@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wk.ti.user.service.UserDetailExtractor.auth;
+import static com.wk.ti.user.service.UserDetailExtractor.getUser;
 import static java.lang.String.format;
 
 @Service
@@ -50,9 +52,22 @@ public class ProjectService {
     }
 
     public List<ProjectDto> findAll() {
-        return projectRepository.findAll()
-                .stream()
+        List<Project> projects;
+        if (auth() == null) {
+            projects = projectRepository.findAllProjects(null);
+        } else {
+            projects = projectRepository.findAllProjects(getUser());
+        }
+
+        return projects.stream()
                 .map(ProjectDto::of)
                 .toList();
+    }
+
+    public Long count() {
+        if (auth() == null) {
+            return projectRepository.projectCount(null);
+        }
+        return projectRepository.projectCount(getUser());
     }
 }

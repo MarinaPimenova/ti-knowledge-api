@@ -1,17 +1,19 @@
-# get all projects
-GET http://localhost:8081/api/v1/knowledge/questions
-Accept: application/json
-Authorization: Bearer <JWT>
-
-###
-### pagination
-GET http://localhost:8081/api/v1/knowledge/questions?offset=0&size=15
+# get all questions
+GET http://localhost:8081/api/v1/questions
 Accept: application/json
 Authorization: Bearer <JWT>
 
 ###
 
-POST http://localhost:8081/api/v1/knowledge/questions
+# get a single question by id
+GET http://localhost:8081/api/v1/questions/1
+Accept: application/json
+Authorization: Bearer <JWT>
+
+###
+
+# create a question with code example, tags, projects and resources
+POST http://localhost:8081/api/v1/questions
 Content-Type: application/json
 Authorization: Bearer <JWT>
 
@@ -33,10 +35,13 @@ Authorization: Bearer <JWT>
     }
   ]
 }
+
 ###
 
-POST http://localhost:8081/api/v1/knowledge/questions
+# create a minimal question without a code example or resources
+POST http://localhost:8081/api/v1/questions
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
   "question": "What is durability?",
@@ -48,4 +53,48 @@ Content-Type: application/json
   "projectIds": [],
   "resources": []
 }
+
+###
+
+# update an existing question (body shape matches the GET-by-id response)
+PUT http://localhost:8081/api/v1/questions/1
+Content-Type: application/json
+Authorization: Bearer <JWT>
+
+{
+  "question": "What is Spring Boot?",
+  "shortAnswer": "Spring Boot simplifies Spring application development and deployment.",
+  "detailedAnswer": "It provides auto-configuration, an embedded server and production-ready defaults.",
+  "questionLevel": {
+    "questionLevelId": 2,
+    "difficultyCode": "MEDIUM"
+  },
+  "codeExample": {
+    "language": "JAVA",
+    "sourceCode": "SpringApplication.run(App.class, args);"
+  },
+  "tags": [
+    { "id": 1, "tag": "spring" },
+    { "id": 2, "tag": "spring-boot" }
+  ],
+  "resources": [
+    { "id": 1, "url": "https://spring.io/projects/spring-boot", "description": "Spring Boot documentation" }
+  ],
+  "projects": [
+    { "id": 1, "name": "TI Knowledge Platform" }
+  ]
+}
+
+###
+
+# delete a question
+DELETE http://localhost:8081/api/v1/questions/1
+Authorization: Bearer <JWT>
+
+###
+
+# missing Authorization header -> expect 401 Unauthorized since /api/** is protected
+GET http://localhost:8081/api/v1/questions
+Accept: application/json
+
 ###

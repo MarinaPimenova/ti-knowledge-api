@@ -1,8 +1,6 @@
 package com.wk.ti.controller;
 
-import com.wk.ti.question.model.CreateQuestionRequest;
-import com.wk.ti.question.model.QuestionDetails;
-import com.wk.ti.question.model.QuestionProjection;
+import com.wk.ti.question.model.*;
 import com.wk.ti.question.service.QuestionProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +20,36 @@ public class QuestionController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<QuestionProjection>> findAll() {
         return ResponseEntity.ok(questionProcessor.findAll());
+    }
+
+
+    @GetMapping(value = "/search",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<QuestionProjection>> findByPattern(
+            @RequestParam(defaultValue = "") String pattern
+    ) {
+        return ResponseEntity.ok(questionProcessor.findByPattern(pattern));
+    }
+
+    // To back "Recently Added Questions" UI component, you need an endpoint
+    // that fetches a fixed limit of recently created/updated questions
+    // and maps them to a tailored DTO containing the title, primary tag/category,
+    // level (e.g., "A2"),
+    // relative update date string (or timestamp), and a snippet preview.
+    @GetMapping(value = "/recent", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RecentQuestionResponse>> findRecent(
+            @RequestParam(defaultValue = "3") int limit) {
+        return ResponseEntity.ok(questionProcessor.findRecent(limit));
+    }
+
+    @GetMapping(value = "/count")
+    public ResponseEntity<Long> count() {
+        return ResponseEntity.ok(questionProcessor.count());
+    }
+
+    // To query the count of questions aggregated by tags
+    @GetMapping(value = "/tags/count", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<QuestionTagCountResponse>> countByTag() {
+        return ResponseEntity.ok(questionProcessor.countByTags());
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

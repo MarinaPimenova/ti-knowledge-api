@@ -5,28 +5,25 @@ import com.wk.ti.question.model.QuestionProjection;
 public class TestQuestionProjection implements QuestionProjection {
 
     private final long id;
-    private final String tag;
+    private final String tags;
     private final String question;
     private final String shortAnswer;
-    private final String resourceUrl;
-    private final String description;
+    private final String resources;
     private final String projectName;
 
     public TestQuestionProjection(
             long id,
-            String tag,
+            String tags,
             String question,
             String shortAnswer,
-            String resourceUrl,
-            String description,
+            String resources,
             String projectName) {
 
         this.id = id;
-        this.tag = tag;
+        this.tags = tags;
         this.question = question;
         this.shortAnswer = shortAnswer;
-        this.resourceUrl = resourceUrl;
-        this.description = description;
+        this.resources = resources;
         this.projectName = projectName;
     }
 
@@ -36,8 +33,8 @@ public class TestQuestionProjection implements QuestionProjection {
     }
 
     @Override
-    public String getTag() {
-        return tag;
+    public String getTags() {
+        return tags;
     }
 
     @Override
@@ -51,13 +48,8 @@ public class TestQuestionProjection implements QuestionProjection {
     }
 
     @Override
-    public String getResourceUrl() {
-        return resourceUrl;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
+    public String getResources() {
+        return resources;
     }
 
     @Override

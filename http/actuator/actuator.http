@@ -1,0 +1,17 @@
+# health check - no authentication required, good first smoke test
+GET http://localhost:8081/actuator/health
+Accept: application/json
+
+###
+
+# general info endpoint
+GET http://localhost:8081/actuator/info
+Accept: application/json
+
+###
+
+# prometheus scrape endpoint
+GET http://localhost:8081/actuator/prometheus
+Accept: text/plain
+
+###
