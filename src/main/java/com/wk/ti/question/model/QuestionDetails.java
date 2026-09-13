@@ -12,6 +12,7 @@ import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @SuppressWarnings("JpaDataSourceORMInspection")
@@ -60,6 +61,12 @@ public class QuestionDetails {
 
     @Column(name = "updated_by")
     private String updatedBy;
+
+    @Column(name = "created_date", updatable = false)
+    protected OffsetDateTime createdDate;
+
+    @Column(name = "modified_date")
+    protected OffsetDateTime updatedDate;
 
     @JsonIgnore
     public static QuestionDetails of(Long id, QuestionDetails q) {

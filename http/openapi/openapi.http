@@ -1,0 +1,8 @@
+# raw OpenAPI specification - no authentication required
+GET http://localhost:8081/v3/api-docs
+Accept: application/json
+
+###
+
+# Swagger UI is a browser page, not a REST call - open it directly:
+# http://localhost:8081/swagger-ui/index.html

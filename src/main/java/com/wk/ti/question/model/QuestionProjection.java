@@ -5,15 +5,13 @@ public interface QuestionProjection {
 
     long getId();
 
-    String getTag();
+    String getTags();
 
     String getQuestion();
 
     String getShortAnswer();
 
-    String getResourceUrl();
-
-    String getDescription();
+    String getResources();
 
     String getProjectName();
 

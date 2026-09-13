@@ -33,6 +33,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SuppressWarnings("SameParameterValue")
 @WebMvcTest(
         controllers = QuestionController.class,
         excludeAutoConfiguration = {
@@ -59,11 +60,11 @@ class QuestionControllerTest {
         // given
         QuestionProjection question = new TestQuestionProjection(
                 1L,
-                "java",
+                "Java|Spring",
                 "What is Java?",
                 "Java is a programming language.",
                 "https://example.com/java",
-                "Java description",
+
                 "TI Knowledge"
         );
 
@@ -79,14 +80,13 @@ class QuestionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].tag").value("java"))
+                .andExpect(jsonPath("$[0].tags").value("Java|Spring"))
                 .andExpect(jsonPath("$[0].question").value("What is Java?"))
                 .andExpect(jsonPath("$[0].shortAnswer")
                         .value("Java is a programming language."))
-                .andExpect(jsonPath("$[0].resourceUrl")
+                .andExpect(jsonPath("$[0].resources")
                         .value("https://example.com/java"))
-                .andExpect(jsonPath("$[0].description")
-                        .value("Java description"))
+
                 .andExpect(jsonPath("$[0].projectName")
                         .value("TI Knowledge"));
 
