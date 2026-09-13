@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     @Query(value = """
-            select qdp.id,
+            select qdp.question_id as id,
                    qdp.tags,
                    qdp.question,
                    qdp.shortAnswer,
