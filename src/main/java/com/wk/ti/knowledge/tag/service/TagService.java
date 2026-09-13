@@ -52,4 +52,8 @@ public class TagService {
                 .map(TagDto::of)
                 .toList();
     }
+
+    public Long count() {
+        return tagRepository.count();
+    }
 }

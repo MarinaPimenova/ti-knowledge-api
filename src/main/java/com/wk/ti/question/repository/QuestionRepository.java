@@ -59,7 +59,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = """
             select qat.tag,
                    qat.question_count
-            from knowledge.questions_aggregated_by_tags qat
+            from knowledge.questions_aggregated_by_tags() qat
             """, nativeQuery = true)
     List<QuestionTagCountResponse> countByTags();
 

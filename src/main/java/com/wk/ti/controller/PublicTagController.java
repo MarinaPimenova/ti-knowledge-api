@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/questions/tags")
+@RequestMapping("/rest/v1/questions/tags")
 @RequiredArgsConstructor
-public class TagController {
+public class PublicTagController {
     private final TagService tagService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
