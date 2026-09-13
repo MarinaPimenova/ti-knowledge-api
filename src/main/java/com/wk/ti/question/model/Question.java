@@ -17,7 +17,7 @@ public class Question extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "question_id_seq_gen", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "question_id_seq_gen", sequenceName = "knowledge.question_id_seq",
-            allocationSize = 100)
+            allocationSize = 1)
     private Long id;
     @Column(name = "question_level_id")
     private Long questionLevelId;

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rest/v1/questions/tags")
+@RequestMapping("/rest/v1/tags")
 @RequiredArgsConstructor
 public class PublicTagController {
     private final TagService tagService;
